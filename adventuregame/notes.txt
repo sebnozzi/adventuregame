@@ -1,0 +1,7 @@
+Next iteration:
+- Interaction with objects in room
+    - Turning on the light
+    - Picking up wallet
+    - Opening entrance door
+    - Pick up food
+    - Pay deliveryman
