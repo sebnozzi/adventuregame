@@ -2,6 +2,9 @@
 location = "living_room"
 command = ""
 
+lights_are_on = False
+got_wallet = False
+
 while command != "quit":
 
     if location == "living_room":
@@ -67,8 +70,9 @@ while command != "quit":
         print("")
         print("At the other side of the door somebody says \"Food delivery!\"")
         print("")
-        print("But you realise you don't have your wallet with you, and can't remember where you put it.")
-        print("Maybe your spouse knows. It would not hurt to ask.")
+        if not got_wallet:
+            print("But you realize you don't have your wallet with you, and can't remember where you put it.")
+            print("Maybe your spouse knows. It would not hurt to ask.")
         print("")
         print("* North: living room")
         print("* South: the street")
@@ -89,9 +93,16 @@ while command != "quit":
                 print("Sorry, don't know how to do that.")
 
     if location == "bedroom":
-        print("You are in the bedroom. The room is dark.")
+        print("You are in the bedroom. ")
+        if not lights_are_on:
+            print("The room is dark.")
         print("")
-        print("You know you left somebody important here, but don't remember what.")
+        if lights_are_on:
+            if not got_wallet:
+                print("Your wallet is laying on your pillow.")
+        else:
+            if not got_wallet:
+                print("You know you left somebody important here, but don't remember what.")
         print("")
         print("* East: living room")
         print("")
@@ -102,6 +113,20 @@ while command != "quit":
             if command == "go east":
                 location = "living_room"
                 break
+            elif command in {"turn on lights", "turn lights on", "turn on light", "turn light on"}:
+                if lights_are_on:
+                    print("The lights are already on.")
+                else:
+                    print("The lights are now on ... you see clearly now ...")
+                    lights_are_on = True
+                    break
+            elif command in {"get wallet", "pick up wallet"}:
+                if lights_are_on:
+                    print("You have your wallet now")
+                    got_wallet = True
+                    break
+                else:
+                    print("You would like to, if you knew where it is.")
             elif command == "quit":
                 location = ""
             else:
